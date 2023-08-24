@@ -149,7 +149,12 @@ export class TypeormStore extends Store {
     const expiresAt = Math.floor(new Date().getTime() / 1000) + ttl;
 
     this.repository
-      .save({ id, data, expiresAt })
+      .save({
+        ...session,
+        id,
+        data,
+        expiresAt
+      })
       .then(() => callback && callback(null))
       .catch((error: any) => callback && callback(error));
   };
